@@ -482,6 +482,86 @@ const QUESTION_BANK = [
     correct: 1,
     explanation: 'Intune allows extending compliance via custom scripts (device compliance → Scripts / custom compliance) where a PowerShell script runs on the device and returns a compliance state based on its output. Alternatively, proactive remediation scripts can detect issues, and a compliance policy can be built around custom criteria. Adding a registry check to a configuration profile configures a setting but does not extend compliance evaluation logic. Custom script-based compliance IS possible in Intune.',
   },
+  // ── Additional questions from free-braindumps.com (community-verified) ─────
+  {
+    id: 'D1-09',
+    domain: 'Prepare Infrastructure',
+    question: "You need to prepare the Phoenix office computers for a Windows Autopilot deployment. The computers have Windows 10 Pro preinstalled and were purchased already. What should you do first?",
+    options: [
+      "Generalize the computers and configure the Device settings from the Microsoft Entra admin center.",
+      "Extract the serial number of each computer to an XML file and upload the file from the Microsoft Intune admin center.",
+      "Extract the hardware ID information of each computer to a CSV file and upload the file from the Microsoft Intune admin center.",
+      "Generalize the computers and configure the Mobility (MDM and MAM) settings from the Microsoft Entra admin center.",
+    ],
+    correct: 2,
+    explanation: "For Windows Autopilot deployment, you register the devices by extracting their hardware IDs (serial numbers, hardware hash) into a CSV file and uploading that CSV from the Microsoft Intune admin center (Devices → Enrollment → Windows enrollment → Devices → Add devices → Import). The other options are incorrect: you do not generalize the computers (that is for imaging, not Autopilot), and you use hardware ID CSV, not XML. Mobility settings in Entra ID configure MDM enrollment URL, not device registration.",
+  },
+  {
+    id: 'D1-10',
+    domain: 'Prepare Infrastructure',
+    question: "Your company uses Microsoft Intune to manage devices. You need to ensure that only Android devices that use Android work profiles can enroll in Intune. Which two configurations should you perform in the device enrollment restrictions? (Each correct answer presents part of the solution.)",
+    options: [
+      "From Platform Settings, set Android device administrator Personally Owned to Block.",
+      "From Platform Settings, set Android Enterprise (work profile) to Allow.",
+      "From Platform Settings, set Android device administrator Personally Owned to Allow.",
+      "From Platform Settings, set Android device administrator to Block.",
+    ],
+    correct: 1,
+    explanation: "To ensure only Android Enterprise work profile devices enroll: (1) Set Android Enterprise (work profile) to Allow so work profile-capable devices can enroll with a work profile. (2) Set Android device administrator to Block so that devices that do not support Android Enterprise (or that would fall back to device administrator) are blocked. By default, Android Enterprise work profile is allowed for personal devices; any device supporting Android Enterprise personal work profiles also supports the Android device administrator solution, so if you do not want device administrator enrollment, you must block it explicitly.",
+  },
+  {
+    id: 'D1-11',
+    domain: 'Prepare Infrastructure',
+    question: "You have 100 Windows 11 devices enrolled in Microsoft Intune. You need to configure the devices to retrieve Windows updates from the internet and from other computers on a local network. Which Delivery Optimization setting should you configure, and which type of Intune object should you create?",
+    options: [
+      "Download mode, in a device configuration profile.",
+      "Bandwidth limit, in an update ring for Windows 10 and later.",
+      "Download mode, in a Windows Update for Business policy.",
+      "Group Policy settings for Peer-to-Peer Networking Services.",
+    ],
+    correct: 0,
+    explanation: "Delivery Optimization (DO) settings — including Download mode (which controls whether clients can download from internet sources, local network peers, or both) — are configured via a device configuration profile in Intune (Devices → Configuration → Create → Windows 10 and later → Delivery Optimization). Update rings control update deferral and scheduling, not DO mode. Windows Update for Business policies are a different policy type. Group Policy is the on-prem method, not the Intune path.",
+  },
+  {
+    id: 'D1-12',
+    domain: 'Prepare Infrastructure',
+    question: "You have a Microsoft 365 E5 subscription. The subscription contains 25 computers that run Windows 11 and are enrolled in Microsoft Intune. You need to onboard the devices to Microsoft Defender for Endpoint. What should you create in the Microsoft Intune admin center?",
+    options: [
+      "an attack surface reduction (ASR) policy",
+      "a security baseline",
+      "an endpoint detection and response (EDR) policy",
+      "an account protection policy",
+    ],
+    correct: 2,
+    explanation: "To onboard Windows devices to Microsoft Defender for Endpoint via Intune, you create an Endpoint Detection and Response (EDR) policy (Intune → Endpoint security → EDR). An EDR policy configures devices to communicate with Defender for Endpoint services, scan files, detect threats, and report risk level. After the service-to-service connection between Intune and Defender for Endpoint is set up, Intune receives an onboarding configuration package that is deployed via the EDR policy. ASR policies mitigate exploit behaviors; security baselines are a collection of recommended settings; account protection controls Credential Guard/Windows Hello — none of these are the primary onboarding mechanism.",
+  },
+  {
+    id: 'D2-08',
+    domain: 'Manage & Maintain Devices',
+    question: "You need to ensure that computer objects can be created as part of a Windows Autopilot deployment. The Intune Connector for Active Directory is installed on Server1. To what should you grant the right to create the computer objects?",
+    options: [
+      "Server1",
+      "DC1",
+      "GroupA",
+      "Server2",
+    ],
+    correct: 0,
+    explanation: "When the Intune Connector for Active Directory is installed on Server1, the connector handles creating on-premises Active Directory computer objects during Windows Autopilot deployments (for hybrid Azure AD joined scenarios). You grant the right to create computer objects to Server1, because it is the machine running the Intune Connector that performs the creation during Autopilot-triggered synchronization. DC1 is the domain controller but is not the connector host. GroupA is a user group (for deployment authorization), not a machine that creates AD objects.",
+  },
+  {
+    id: 'D3-08',
+    domain: 'Protect Devices',
+    question: "Your company uses Microsoft Intune to manage devices. You need to ensure that only Android devices that use Android work profiles can enroll in Intune. Which two configurations should you perform in the device enrollment restrictions? (Each correct answer presents part of the solution.)",
+    options: [
+      "From Platform Settings, set Android device administrator Personally Owned to Block.",
+      "From Platform Settings, set Android Enterprise (work profile) to Allow.",
+      "From Platform Settings, set Android device administrator Personally Owned to Allow.",
+      "From Platform Settings, set Android device administrator to Block.",
+    ],
+    correct: 1,
+    explanation: "Same requirement as D1-10 (appears in a different question set). The solution: (1) Allow Android Enterprise (work profile) so work profile-capable devices enroll with a work profile. (2) Block Android device administrator so non-work-profile / legacy devices cannot enroll. The combination ensures only true Android Enterprise work profile devices enroll, and device administrator fallback is eliminated.",
+  },
+
 ];
 
 // ─── Assessment State ─────────────────────────────────────────────────────────
