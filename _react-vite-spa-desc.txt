@@ -1,0 +1,1 @@
+Build a standalone React + Vite SPA — init, host/allowedHosts config, build, verify.
